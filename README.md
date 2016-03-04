@@ -107,3 +107,18 @@ Create a new virtual network in vmware using virtual network editor
 Inside VMware virtual machine settings
 - in processors section, enable Virtualize Intel VT-x/EPT or AMD-V/RVI (this option allows nested visualization)
 
+# Enable sudo command without entering password
+- echo "<your username here> ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Enable rally plugin 
+- git clone https://github.com/openstack/rally
+- add enable_plugin rally https://github.com/openstack/rally master to the local.conf file
+
+# Make local.conf file avaialble in /devstack root directory 
+- I created a symbolic link of /devstack/local.conf.examples/local.conf to /devstack
+
+# Run devstack 
+- > ./stack.sh 
+
+
+
