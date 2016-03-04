@@ -105,10 +105,33 @@ Create a new virtual network in vmware using virtual network editor
     - subnet IP: 10.10.10.0, Subnet mask: 255.255.255.0
 
 Inside VMware virtual machine settings
+- remove existing NAT NIC 
+- add the first NIC and set it to custom VMnet10
+- add the second NIC as NAT (default to VMnet8)
 - in processors section, enable Virtualize Intel VT-x/EPT or AMD-V/RVI (this option allows nested visualization)
 
 # Enable sudo command without entering password
 - echo "<your username here> ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Inside ubuntu adjust network configurations 
+- preferably disable network manager 
+- go to /etc/network/interfaces and assign the following settings 
+    - append the following to the file 
+      # eth0 NAT 
+      auto eth0
+      iface eth0 inet static
+      address 10.0.0.3
+      netmask 255.255.255.0
+      gateway 10.0.0.2
+      broadcast 10.0.0.255
+      dns-nameservers 8.8.8.8
+
+- use ip route to check out default network route
+    - If we want internet access, we should set default to the NAT 
+    - ip route del default
+    - route add default gw 10.0.0.2 eth0
+    - ip route (verify settings)
+
 
 # Enable rally plugin 
 - git clone https://github.com/openstack/rally
@@ -120,5 +143,13 @@ Inside VMware virtual machine settings
 # Run devstack 
 - > ./stack.sh 
 
+# Shutdown devstack: 
+- > ./unstack.sh
+
+# Remove files that Devstack installed: 
+- > ./clean.sh
+
+# Rejoin Devstack after reboot: 
+- > ./rejoin-stack.sh
 
 
