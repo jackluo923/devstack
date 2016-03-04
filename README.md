@@ -95,3 +95,15 @@ DevStack can be extensively configured via the configuration file
 this file if you want anything other than the most basic setup.  Start
 by reading the [configuration guide](doc/source/configuration.rst) for
 details of the configuration file and the many available options.
+
+# Configure devStack with VMware
+Create a new virtual network in vmware using virtual network editor 
+- Created VMnet10 (unused) and configure it as below 
+    - host only network adapter 
+    - uncheck a host virtual adapter to this network 
+    - uncheck use local DHCP service to distribute IP address to VM  
+    - subnet IP: 10.10.10.0, Subnet mask: 255.255.255.0
+
+Inside VMware virtual machine settings
+- in processors section, enable Virtualize Intel VT-x/EPT or AMD-V/RVI (this option allows nested visualization)
+
